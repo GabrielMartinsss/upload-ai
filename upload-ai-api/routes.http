@@ -1,0 +1,34 @@
+# @name get-propmpts
+GET http://localhost:3333/prompts
+
+###
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+# @name create-transcription
+POST http://localhost:3333/videos/3667a0f6-a12e-4557-81cf-0b56e7875597/transcription
+Content-Type: application/json
+
+{
+  "prompt": "Sockets User Datagram Protocol, Node.js Streams, Estender o Node.js com funções do C++ ou Rust"
+}
+
+###
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "3667a0f6-a12e-4557-81cf-0b56e7875597",
+  "temperature": 0.5,
+  "prompt": "Gere um resumo sucinto da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
